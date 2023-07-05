@@ -28,14 +28,17 @@ public class LoginSteps extends CommonMethods {
         WebElement usernameTextField = driver.findElement(By.id("txtUsername"));
         WebElement passwordTextField = driver.findElement(By.id("txtPassword"));
         //entering the credential
-        usernameTextField.sendKeys(ConfigReader.getPropertyValue("username"));
-        passwordTextField.sendKeys(ConfigReader.getPropertyValue("password"));
+       // usernameTextField.sendKeys(ConfigReader.getPropertyValue("username"));
+      //  passwordTextField.sendKeys(ConfigReader.getPropertyValue("password"));
+        sendText(ConfigReader.getPropertyValue("username"), usernameTextField);
+        sendText(ConfigReader.getPropertyValue("password"),passwordTextField);
     }
 
     @When("user clicks on login button")
     public void user_clicks_on_login_button() {
         WebElement loginButton = driver.findElement(By.name("Submit"));
-        loginButton.click();
+       // loginButton.click();
+        click(loginButton);
     }
 
     @Then("user is successfully logged in the application")
@@ -48,8 +51,10 @@ public class LoginSteps extends CommonMethods {
        WebElement usernameField = driver.findElement(By.id("txtUsername"));
        WebElement passwordField = driver.findElement(By.id("txtPassword"));
        //logged in via normal employee
-        usernameField.sendKeys("dalima123");
-        passwordField.sendKeys("Hum@nhrm123");
+       // usernameField.sendKeys("dalima123");
+       // passwordField.sendKeys("Hum@nhrm123");
+        sendText(ConfigReader.getPropertyValue("dalima123"), usernameField);
+        sendText(ConfigReader.getPropertyValue("Hum@nhrm123"),passwordField);
     }
 
     @When("user enters invalid admin username and password")
@@ -57,8 +62,10 @@ public class LoginSteps extends CommonMethods {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
         WebElement passwordField = driver.findElement(By.id("txtPassword"));
         //logged in via normal employee
-        usernameField.sendKeys("admin123");
-        passwordField.sendKeys("Hum@nhrm123");
+        //usernameField.sendKeys("admin123");
+        //passwordField.sendKeys("Hum@nhrm123");
+        sendText(ConfigReader.getPropertyValue("admin123"), usernameField);
+        sendText(ConfigReader.getPropertyValue("Hum#n"),passwordField);
     }
     @Then("error message is displayed")
     public void error_message_is_displayed() {

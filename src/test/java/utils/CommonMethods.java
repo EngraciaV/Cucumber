@@ -1,9 +1,23 @@
 package utils;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
+import java.util.SimpleTimeZone;
 
 public class CommonMethods {
     public static WebDriver driver;
@@ -27,5 +41,51 @@ public class CommonMethods {
         if (driver != null) {
             driver.quit();
         }
+    }
+    public static void sendText(String text, WebElement element){
+        element.clear();
+        element.sendKeys(text);
+    }
+    public static WebDriverWait getWait(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait;
+    }
+    public static void waitForClickability(WebElement element){
+        getWait().until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public static void click (WebElement element){
+        waitForClickability(element);
+        element.click();
+    }
+    public static void selectFromDropdown(WebElement dropDown, String visibleText) {
+        Select sel = new Select(dropDown);
+        sel.selectByVisibleText(visibleText);
+    }
+
+    public static void selectFromDropdown(String value, WebElement dropDown) {
+        Select sel = new Select(dropDown);
+        sel.selectByValue(value);
+    }
+
+    public static void selectFromDropdown(WebElement dropDown, int index) {
+        Select sel = new Select(dropDown);
+        sel.selectByIndex(index);
+    }
+
+    public static byte[] takeScreenshot(String fileName) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        byte[] picBytes = ts.getScreenshotAs(OutputType.BYTES);
+        File screenShot = ts.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenShot,
+                new File(Constants.SCREENSHOT_FILEPATH + fileName+ " "+getTimeStamp("yyyy-MM-dd-HH-mm-ss ")+".png"));
+
+        return picBytes;
+    }
+
+    public  static  String getTimeStamp(String pattern){
+        //it returns the current date and time in Java
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 }
