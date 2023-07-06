@@ -18,6 +18,7 @@ public class LoginPage extends CommonMethods {
     @FindBy(id="btnLogin")
     public WebElement loginButton;
 
+
     //to initialize all the elements of this page we have to call them inside constructor
     public LoginPage(){
         PageFactory.initElements(driver,this);
